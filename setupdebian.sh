@@ -29,7 +29,7 @@ echo mysql-server-5.1 mysql-server/root_password password $MYSQLROOTPASSWORD | d
 echo mysql-server-5.1 mysql-server/root_password_again password $MYSQLROOTPASSWORD | debconf-set-selections
 
 # some essential software is installed
-apt-get -y install locales vim php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd nginx imagemagick locate mysql-server mysql-client munin munin-node munin-plugins-extra libio-all-lwp-perl
+apt-get -y install locales vim php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd nginx imagemagick locate mysql-server mysql-client munin munin-node munin-plugins-extra libio-all-lwp-perl telnet
 
 # tune up php-fpm
 echo pm.max_children = 25 >> /etc/php5/fpm/php-fpm.conf
@@ -137,16 +137,19 @@ ln -s /usr/share/munin/plugins/nginx_status  /etc/munin/plugins/
 ln -s /usr/share/munin/plugins/ping_  /etc/munin/plugins/ping_google.com
 
 # let's configure the munin plugins a bit
-echo "[nginx_*]
+echo "[nginx*]
 env.url http://localhost/nginx_status
+env.ua nginx-status-verifier/0.1
 " > /etc/munin/plugin-conf.d/nginx
 echo "[netstat]
 user root
 " > /etc/munin/plugin-conf.d/netstat
-sed -i 's/\[localhost\.localdomain\]/[$MYMUNININSTANCE]/g' /etc/munin/munin.conf
+sed -i "s/\[localhost\.localdomain\]/[$MYMUNININSTANCE]/g" /etc/munin/munin.conf
 chmod -R 755 /usr/share/munin/plugins/
 
 # restart services
+update-rc.d cron defaults
+/etc/init.d/cron restart
 /etc/init.d/nginx restart
 /etc/init.d/munin-node restart
 /etc/init.d/mysql restart
