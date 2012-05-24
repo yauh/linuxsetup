@@ -8,7 +8,7 @@ echo "Please enter the hostname for munin: "
 read MYMUNININSTANCE
 
 # sort the apt sources out properly
-echo ## automatically appended sources >> /etc/apt/sources.list
+echo ## The golem appended the following sources >> /etc/apt/sources.list
 echo deb http://ftp.de.debian.org/debian squeeze main >> /etc/apt/sources.list
 echo deb-src http://ftp.de.debian.org/debian squeeze main >> /etc/apt/sources.list
 echo deb http://nginx.org/packages/debian/ squeeze nginx >> /etc/apt/sources.list
@@ -29,7 +29,7 @@ echo mysql-server-5.1 mysql-server/root_password password $MYSQLROOTPASSWORD | d
 echo mysql-server-5.1 mysql-server/root_password_again password $MYSQLROOTPASSWORD | debconf-set-selections
 
 # some essential software is installed
-apt-get -y install locales vim php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd nginx imagemagick locate mysql-server mysql-client munin munin-node munin-plugins-extra libio-all-lwp-perl telnet
+apt-get -y install locales vim php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd nginx imagemagick locate mysql-server mysql-client munin munin-node munin-plugins-extra libio-all-lwp-perl telnet python git-core g++ openssl libssl-dev make
 
 # tune up php-fpm
 echo pm.max_children = 25 >> /etc/php5/fpm/php-fpm.conf
@@ -56,7 +56,6 @@ echo "fastcgi_intercept_errors on;" >> /etc/nginx/conf.d/fastcgi_params
 #client_body_buffer_size 128k;
 
 # set up sites for nginx
-
 echo "server {
   listen 8080 ;  #could also be 1.2.3.4:80
 
@@ -114,7 +113,7 @@ echo "server {
                allow 127.0.0.1;
                deny all;
        }
-}" >> /etc/nginx/conf.d/munin.conf
+}" > /etc/nginx/conf.d/munin.conf
 mkdir -p /var/www/html
 rm /etc/nginx/conf.d/default.conf
 

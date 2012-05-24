@@ -16,7 +16,7 @@ echo "#########################################"
 echo 
 
 # define the options/order for menu select
-options=("all" "munin" "nginx" "php" "mysql" "gmail")
+options=("all" "munin" "nginx" "php" "mysql" "gmail" "nodejs")
 
 menu() {
     echo "Please select one or more tasks to install:"
@@ -170,6 +170,10 @@ echo "server {
 
 # munin will be served via nginx
 touch /etc/nginx/conf.d/munin.conf
+if [[ $MYMUNININSTANCE == "" ]] ; then
+	echo "Please enter the hostname for munin: "
+	read MYMUNININSTANCE
+fi
 echo "server {
   server_name $MYMUNININSTANCE;
   root /var/cache/munin/www/;
@@ -193,8 +197,6 @@ echo "server {
 }" >> /etc/nginx/conf.d/munin.conf
 mkdir -p /var/www/html
 
-# configure php
-sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /etc/php5/fpm/php.ini 
 
 					;;
 					*)
@@ -203,6 +205,7 @@ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /etc/php5/fpm/php.ini
 				esac
 			
 		fi
+		/etc/init.d/nginx restart
 		;;
 	all|php)
 		if  [ "${choices[$counter]}" == "+" ] ; then
@@ -211,6 +214,8 @@ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /etc/php5/fpm/php.ini
 					Debian)
 						echo "##### doing the debian setup for php"
 						apt-get -y install php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd imagemagick
+# configure phpfor nginx/fpm
+sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /etc/php5/fpm/php.ini 
 
 						# tune up php-fpm
 echo pm.max_children = 25 >> /etc/php5/fpm/php-fpm.conf
@@ -263,12 +268,43 @@ echo request_terminate_timeout = 90s >> /etc/php5/fpm/php-fpm.conf
 		;;
 		all|nodejs)
 		if  [ "${choices[$counter]}" == "+" ] ; then
-			echo "*** Let's set up the system to use nodejs"
+			echo "*** Let's install nodejs"
 				case $MYDISTRO in
 					Debian)
 						echo "##### doing the debian setup for nodejs"
-						apt-get -y install python git-core g++ openssl libssl-dev make
-
+						
+						apt-get -y install g++ curl libssl-dev apache2-utils git-core python make
+						cd /etc
+						git clone git://github.com/joyent/node
+						cd /etc/node
+						./configure
+						make
+						make install
+						echo "Please enter the domain for your nodejs server"
+						read NODEJSDOMAIN
+						echo "server {
+						  listen   80;
+						  server_name $NODEJSDOMAIN;
+						
+						  location / {
+							   proxy_set_header X-Real-IP \$remote_addr;
+							   proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+							   proxy_set_header Host \$http_host;
+							   proxy_set_header X-NginX-Proxy true;
+							   proxy_pass http://127.0.0.1:8000/;
+							   proxy_redirect off;
+						  }
+						}" > /etc/nginx/conf.d/node.conf
+						
+						
+						echo "var http = require('http');
+						  http.createServer(function (req, res) {
+						  res.writeHead(200, {'Content-Type': 'text/plain'});
+						  res.end('Rock on!\n');
+						}).listen(8000, \"127.0.0.1\");
+						console.log('Server running at http://127.0.0.1:8000/');" > /usr/local/bin/nodeserver.js
+						
+						node /usr/local/bin/nodeserver.js
 					;;
 					*)
 						echo "Don't know what to do for nodejs on this system"
@@ -279,3 +315,4 @@ echo request_terminate_timeout = 90s >> /etc/php5/fpm/php-fpm.conf
 	esac
 	let counter=counter+1 
 done
+
