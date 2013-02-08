@@ -304,7 +304,7 @@ echo request_terminate_timeout = 90s >> /etc/php5/fpm/php-fpm.conf
 						}).listen(8000, \"127.0.0.1\");
 						console.log('Server running at http://127.0.0.1:8000/');" > /usr/local/bin/nodeserver.js
 						
-						node /usr/local/bin/nodeserver.js
+						nohup node /usr/local/bin/nodeserver.js > /var/log/nodejs.log &
 					;;
 					*)
 						echo "Don't know what to do for nodejs on this system"
