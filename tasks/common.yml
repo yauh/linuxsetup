@@ -1,7 +1,7 @@
-     - name: $item should be installed
-       action: apt pkg=$item state=installed
+     - name: Some common software should be installed
+       action: apt pkg=$item state=latest
        with_items:
-          - make
+          - facter
           - vim 
           - sudo
           - locales

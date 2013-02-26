@@ -1,0 +1,5 @@
+     - name: Mails should be sent using Google Apps (Gmail)
+       action: apt pkg=$item state=latest
+       with_items:
+          - exim4 
+       action: template src=templates/update-exim4.j2 dest=/etc/exim4/update-exim4.conf.conf

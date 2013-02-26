@@ -1,2 +1,2 @@
-       - name: update apt repo
+       - name: apt-get update
          action: command /usr/bin/apt-get update

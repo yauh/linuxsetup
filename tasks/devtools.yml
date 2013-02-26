@@ -1,5 +1,6 @@
-     - name: Development software $item should be installed
-       action: apt pkg=$item state=installed
+     - name: Development software should be installed
+       action: apt pkg=$item state=latest
        with_items:
+          - make
           - gcc
           - git
