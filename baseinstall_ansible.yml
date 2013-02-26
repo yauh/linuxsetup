@@ -1,0 +1,14 @@
+---
+- hosts: all
+  sudo: True
+  sudo_user: root
+ 
+  tasks:
+     - include: tasks/update.yml 
+     - include: tasks/common.yml 
+     - include: tasks/devtools.yml 
+     - include: tasks/webserver.yml 
+     
+ 
+  handlers:
+     - include: handlers/webserver.yml 

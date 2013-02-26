@@ -2,6 +2,7 @@
 # Description: Set up your (virtual) linux server with essentials like LAMP or munin
 # Author: Stephan Hochhaus <stephan@yauh.de
 # Version: 0.1 initial development version
+## initial install assumes no installed software 
 
 # determine distro (so far only Debian works, but CentOS should follow sometime soon)
 

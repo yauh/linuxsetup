@@ -1,0 +1,14 @@
+     - name: $item should be installed
+       action: apt pkg=$item state=installed
+       with_items:
+          - make
+          - vim 
+          - sudo
+          - locales
+          - locate
+          - telnet
+          - openssh-server
+          - ssh
+          - exim4
+          - tar
+          - bzip2

@@ -1,0 +1,9 @@
+     - name: $item should be installed
+       action: apt pkg=$item state=installed
+       with_items:
+          - apache2
+       notify:
+          - restart apache2
+
+     - name: apache should be running
+       action: service name=apache2 state=running
