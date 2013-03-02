@@ -8,6 +8,7 @@
      muninport: 81
      munin_subdomain: munin
      mysql_root_password: ChangeMeNow
+     timezone: Europe/Berlin
 
   vars_prompt:
    - name: "gmail_domain"

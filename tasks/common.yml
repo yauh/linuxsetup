@@ -13,3 +13,11 @@
           - tar
           - bzip2
        tags: common  
+
+     - name: Set the timezone
+       action: command /bin/echo ${timezone} > /etc/timezone  
+       tags: common  
+
+     - name: Set the timezone
+       action: command dpkg-reconfigure -f noninteractive tzdata 
+       tags: common
