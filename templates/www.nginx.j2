@@ -1,0 +1,8 @@
+server {
+  server_name www.{{ ansible_domain }};
+  root /var/www/;
+  location / {
+    index index.html;
+    access_log off;
+  }
+}

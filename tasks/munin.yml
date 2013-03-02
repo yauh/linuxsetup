@@ -13,7 +13,7 @@
        tags: monitoring 
 
      - name: Set up nginx config for munin  
-       action: template src=templates/munin.nginx.j2 dest=/etc/nginx/sites-available/${munin_subdomain}.conf owner=root group=root mode=0755
+       action: template src=templates/munin.nginx.j2 dest=/etc/nginx/sites-available/${munin_subdomain}.${ansible_domain}.conf owner=root group=root mode=0755
        tags: monitoring 
        
      - name: Munin should be running

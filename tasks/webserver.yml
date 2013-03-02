@@ -6,6 +6,10 @@
           - restart nginx
        tags: web 
 
+     - name: Set up nginx config for munin  
+       action: template src=templates/www.nginx.j2 dest=/etc/nginx/sites-available/www.${ansible_domain}.conf owner=root group=root mode=0755
+       tags: web 
+
      - name: Webserver should be running
        action: service name=nginx state=running
        tags: web 
