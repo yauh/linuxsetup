@@ -8,3 +8,11 @@
      - name: create /etc/exim4/exim4.conf.template
        action: template src=templates/exim4.conf.j2 dest=/etc/exim4/exim4.conf.template
        tags: mail 
+
+     - name: update-exim4.conf
+       action: command update-exim4.conf
+       tags: mail 
+
+     - name: Exim4 should be restarted
+       action: command service exim4 restart
+       tags: mail 

@@ -1,3 +1,4 @@
+#jinja2: variable_start_string:<<,variable_end_string:>> 
 #####################################################
 ### main/01_exim4-config_listmacrosdefs
 #####################################################
@@ -1763,7 +1764,7 @@ begin authenticators
 gmail_login:
        driver = plaintext
        public_name = LOGIN
-       client_send = : {{ gmail_user }}@{{ gmail_domain }} : {{ gmail_password }}
+       client_send = : << gmail_user >>@<< gmail_domain >> : << gmail_password >>
 
 #####################################################
 ### end auth/00_exim4-config_header

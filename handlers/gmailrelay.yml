@@ -1,0 +1,2 @@
+    - name: restart exim4
+      action: service name=exim4 state=restarted

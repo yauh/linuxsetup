@@ -2,46 +2,32 @@
 - hosts: all
   sudo: True
   sudo_user: root
+
   vars:
      muninaddress: '*'
      muninport: 81
      munin_subdomain: munin
+     mysql_root_password: ChangeMeNow
+
   vars_prompt:
-   - name: "mysql_root_password"
-     prompt: "Enter MySQL password"
-     private: yes
-     tags: mysql
-   - name: "munin_url"
-     prompt: "Product release version"
-     private: no
-     tags: monitoring   
    - name: "gmail_domain"
      prompt: "Mail Domain"
-     private: no   
-     tags: mail
+     private: no
    - name: "gmail_user"
      prompt: "GMail User Name"
-     private: no   
-     tags: mail  
+     private: no
    - name: "gmail_password"
      prompt: "GMail Password"
-     private: no     
-     tags: mail
+     private: no
+
   tasks:
   - include: tasks/update.yml
-    
   - include: tasks/common.yml
-     
   - include: tasks/devtools.yml 
-     
   - include: tasks/munin.yml 
-    
   - include: tasks/webserver.yml
-      
   - include: tasks/gmailrelay.yml 
-    
-     
- 
+
   handlers:
   - include: handlers/webserver.yml 
-  - include: handlers/munin.yml 
+  - include: handlers/munin.yml
