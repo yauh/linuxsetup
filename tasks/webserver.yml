@@ -4,6 +4,8 @@
           - nginx
        notify:
           - restart nginx
+       tags: web 
 
      - name: Webserver should be running
        action: service name=nginx state=running
+       tags: web 

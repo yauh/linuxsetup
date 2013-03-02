@@ -1,5 +1,10 @@
-     - name: Mails should be sent using Google Apps (Gmail)
+     - name: Install exim4 and adjust /etc/exim4/update-exim4.conf.conf
        action: apt pkg=$item state=latest
        with_items:
           - exim4 
        action: template src=templates/update-exim4.j2 dest=/etc/exim4/update-exim4.conf.conf
+       tags: mail 
+
+     - name: create /etc/exim4/exim4.conf.template
+       action: template src=templates/exim4.conf.j2 dest=/etc/exim4/exim4.conf.template
+       tags: mail 

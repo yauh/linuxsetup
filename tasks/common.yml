@@ -12,3 +12,4 @@
           - exim4
           - tar
           - bzip2
+       tags: common  

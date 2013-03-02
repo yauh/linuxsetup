@@ -11,3 +11,7 @@ Executing the playbooks for Ansible requires ansible to be available on all mach
   * `ansible-playbook baseinstall_ansible.yml -K`
   
 The -K switch asks for the sudo password.
+
+  * `ansible-playbook baseinstall_ansible.yml -K --tags "common,dev,mail,web"`
+
+Individual steps can be (de-)activated by explicitly calling certain tags using the `--tags` switch.

@@ -4,3 +4,4 @@
           - make
           - gcc
           - git
+       tags: dev
