@@ -5,7 +5,7 @@
 
   vars:
      muninaddress: '*'
-     muninport: 81
+     muninport: 4949
      munin_subdomain: munin
      mysql_root_password: ChangeMeNow
      timezone: Europe/Berlin
@@ -24,11 +24,12 @@
   tasks:
   - include: tasks/update.yml
   - include: tasks/common.yml
-  - include: tasks/devtools.yml 
-  - include: tasks/munin.yml 
+  - include: tasks/gmailrelay.yml
+  - include: tasks/devtools.yml
+  - include: tasks/munin.yml
   - include: tasks/webserver.yml
-  - include: tasks/gmailrelay.yml 
+  - include: tasks/php5.yml
 
   handlers:
-  - include: handlers/webserver.yml 
+  - include: handlers/webserver.yml
   - include: handlers/munin.yml
