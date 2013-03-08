@@ -12,6 +12,7 @@
           - exim4
           - tar
           - bzip2
+          - htop
        tags: common  
 
      - name: Set the timezone

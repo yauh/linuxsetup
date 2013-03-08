@@ -4,4 +4,6 @@
           - make
           - gcc
           - git
+          - build-essential
+          - devscripts
        tags: dev

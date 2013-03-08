@@ -1,0 +1,5 @@
+# serve static files directly
+location ~* \.(js|ico|gif|jpg|jpeg|png|css|html|htm|swf|htc|xml|bmp|cur|txt|pdf|zip)$ {
+     access_log off;
+     expires max;
+}
