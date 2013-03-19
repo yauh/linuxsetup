@@ -20,5 +20,5 @@
        tags: mail 
 
      - name: Mail | Send a testmail
-       action: shell cat /etc/hostname | mail -s 'Sent from Ansible' ${admin_email}
+       shell: cat /etc/hostname | mail -s test ${admin_email}
        tags: mail 

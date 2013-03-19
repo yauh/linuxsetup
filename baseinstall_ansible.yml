@@ -12,6 +12,7 @@
      logwatch_email: stephan@yauh.de
 
   vars_files:
+     - variables/common.yml
      - variables/private.yml
      - variables/mysql.yml
 
