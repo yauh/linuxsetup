@@ -1,0 +1,78 @@
+---
+##
+# MySQL database setup.
+#
+#
+- name: MySQL | MySQL should be installed
+  action: apt pkg=$item state=latest
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+  tags: mysql
+
+- name: MySQL | Ensure no /root/.my.cnf is leftover
+  file: path=/root/.my.cnf state=absent
+  tags: mysql
+ 
+# On first attempt, we just accept the failure to handle case where .my.cnf has been deleted
+# but the root password is already set
+# In this case, mysql_user will fail connecting to mysql
+- name: MySQL | Sets the root password (first attempt / failure is ok)
+  action: mysql_user user=root password="${mysql.root_password}"
+  ignore_errors: yes
+  tags: mysql
+ 
+- name: MySQL | Configures for easy access as root user
+  action: template src=templates/root-my-cnf.j2 dest=/root/.my.cnf owner=root mode=0600
+  tags: mysql
+ 
+- name: MySQL | Sets the root password (second attempt)
+  action: mysql_user user=root password="${mysql.root_password}"
+  ignore_errors: yes
+  tags: mysql
+ 
+- name: MySQL | Deletes anonymous MySQL server user for $ansible_hostname
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="" host="$ansible_hostname" state="absent"
+  tags: mysql
+ 
+- name: MySQL | Deletes anonymous MySQL server user for localhost
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="" state="absent"
+  tags: mysql
+ 
+- name: MySQL | Create Database
+  action: mysql_db login_user=root login_password=${mysql.root_password} name="${item.name}"
+  with_items: ${mysql.users}
+  when_set: ${mysql.users}
+  tags: mysql
+
+- name: MySQL | Adds required MySQL users
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="${item.name}" password="${item.password}" priv="${item.privs}"
+  with_items: ${mysql.users}
+  when_set: ${mysql.users}
+  tags: mysql
+ 
+- name: MySQL | Secures the MySQL root user for IPV6 localhost (::1) with $mysql.root_password
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="root" password="$mysql.root_password" host="::1"
+  tags: mysql
+ 
+- name: MySQL | Secures the MySQL root user for IPV4 localhost (127.0.0.1)
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="root" password="${mysql.root_password}" host="127.0.0.1"
+  tags: mysql
+ 
+- name: MySQL | Secures the MySQL root user for localhost domain (localhost)
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="root" password="${mysql.root_password}" host="localhost"
+  tags: mysql
+
+- name: MySQL | Secures the MySQL root user for $ansible_hostname domain
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="root" password="${mysql.root_password}" host="$ansible_hostname"
+  tags: mysql
+ 
+- name: MySQL | Secures the MySQL root user for $ansible_fqdn domain
+  action: mysql_user login_user=root login_password=${mysql.root_password} user="root" password="${mysql.root_password}" host="$ansible_fqdn"
+  tags: mysql
+ 
+- name: MySQL | Removes the MySQL test database
+  action: mysql_db login_user=root login_password=${mysql.root_password} db=test state=absent
+  notify: MySQL | Restart mysql
+  tags: mysql

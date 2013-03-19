@@ -1,0 +1,9 @@
+     - name: File | Install some servers
+       action: apt pkg=$item state=latest
+       with_items:
+          - nfs-kernel-server
+          - nfs-common
+          - samba
+          - avahi-daemon
+          - netatalk 
+       tags: file 

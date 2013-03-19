@@ -1,35 +1,33 @@
 ---
-- hosts: all
+- hosts: local
   sudo: True
+  user: stephan
   sudo_user: root
 
   vars:
      muninaddress: '*'
      muninport: 4949
      munin_subdomain: munin
-     mysql_root_password: ChangeMeNow
      timezone: Europe/Berlin
+     logwatch_email: stephan@yauh.de
 
-  vars_prompt:
-   - name: "gmail_domain"
-     prompt: "Mail Domain"
-     private: no
-   - name: "gmail_user"
-     prompt: "GMail User Name"
-     private: no
-   - name: "gmail_password"
-     prompt: "GMail Password"
-     private: no
+  vars_files:
+     - variables/private.yml
+     - variables/mysql.yml
 
   tasks:
   - include: tasks/update.yml
   - include: tasks/common.yml
   - include: tasks/gmailrelay.yml
+  - include: tasks/fileserver.yml
   - include: tasks/devtools.yml
   - include: tasks/munin.yml
   - include: tasks/webserver.yml
   - include: tasks/php5.yml
+  - include: tasks/mysql.yml
+  - include: tasks/secure.yml
 
   handlers:
   - include: handlers/webserver.yml
   - include: handlers/munin.yml
+  - include: handlers/secure.yml

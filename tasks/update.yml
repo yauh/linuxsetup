@@ -1,3 +1,2 @@
-       - name: apt-get update
+       - name: Common | apt-get update
          action: command /usr/bin/apt-get update
-         tags: common

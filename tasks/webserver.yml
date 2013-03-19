@@ -1,4 +1,4 @@
-     - name: Webserver should be installed
+     - name: Web | Webserver should be installed
        action: apt pkg=$item state=installed
        with_items:
           - nginx
@@ -6,18 +6,26 @@
           - restart nginx
        tags: web 
 
-     - name: Serve static files efficiently
-       action: template src=templates/nginx_static.conf.j2 dest=/etc/nginx/nginx_static.conf owner=root group=root mode=0755
+     - name: Web | Main nginx configuration file
+       action: template src=templates/nginx.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0600
+       tags: web
+
+     - name: Web | Serve static files efficiently
+       action: template src=templates/nginx_static.conf.j2 dest=/etc/nginx/nginx_static.conf owner=root group=root mode=0600
+       tags: web
+ 
+     - name: Web | Activate GZIP compression
+       action: template src=templates/nginx_gzip.conf.j2 dest=/etc/nginx/conf.d/nginx_gzip.conf owner=root group=root mode=0600
        tags: web 
 
-     - name: Set up nginx config for munin  
-       action: template src=templates/www.nginx.j2 dest=/etc/nginx/sites-available/www.${ansible_domain}.conf owner=root group=root mode=0755
+     - name: Web | Set up nginx config for munin  
+       action: template src=templates/www.nginx.j2 dest=/etc/nginx/sites-available/www.${ansible_domain}.conf owner=root group=root mode=0600
        tags: web 
 
-     - name: Activate default www site  
+     - name: Web | Activate default www site  
        file: src=/etc/nginx/sites-available/www.${ansible_domain}.conf dest=/etc/nginx/sites-enabled/www.${ansible_domain}.conf owner=root group=root state=link
        tags: web 
 
-     - name: Webserver should be running
+     - name: Web | Webserver should be running
        action: service name=nginx state=running
        tags: web 

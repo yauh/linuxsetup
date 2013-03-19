@@ -1,0 +1,3 @@
+     muninaddress: '*'
+     muninport: 4949
+     munin_subdomain: munin

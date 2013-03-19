@@ -1,4 +1,4 @@
-     - name: Development software should be installed
+     - name: Dev | Development software should be installed
        action: apt pkg=$item state=latest
        with_items:
           - make

@@ -1,4 +1,4 @@
-     - name: Some common software should be installed
+     - name: "Common | Some common software should be installed"
        action: apt pkg=$item state=latest
        with_items:
           - facter
@@ -15,10 +15,10 @@
           - htop
        tags: common  
 
-     - name: Set the timezone
-       action: command /bin/echo ${timezone} > /etc/timezone  
-       tags: common  
+     - name: "Common | All your base are belong to ansible"
+       action: copy src=templates/motd_ansible.j2 dest=/etc/motd mode=0755
+       tags: common
 
-     - name: Set the timezone
-       action: command dpkg-reconfigure -f noninteractive tzdata 
+     - name: "Common | Set the timezone"
+       action: command /bin/echo ${timezone} > /etc/timezone  && command dpkg-reconfigure -f noninteractive tzdata
        tags: common

@@ -1,4 +1,4 @@
-     - name: PHP should be installed
+     - name: PHP5 | PHP should be installed
        action: apt pkg=$item state=latest
        with_items:
           - php5
@@ -6,9 +6,13 @@
           - php5-cli
           - php5-fpm
           - php5-mcrypt
+          - php5-snmp
+          - php5-imap
+          - php5-memcache
+          - php5-xmlrpc
        tags: php
     
-     - name: Set php-fpm for nginx config file
-       action: template src=templates/nginx_php-fpm.conf.j2 dest=/etc/munin/nginx_php-fpm.conf owner=root group=root mode=0755
+     - name: PHP5 | Set php-fpm for nginx config file
+       action: template src=templates/nginx_php-fpm.conf.j2 dest=/etc/nginx/nginx_php-fpm.conf owner=root group=root mode=0755
        notify: restart nginx
        tags: php 

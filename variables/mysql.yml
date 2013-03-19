@@ -1,0 +1,6 @@
+     mysql:
+        root_password: "cryptic"
+        users:
+           - name: ansible_mysql
+             password: ansible_mysql_password
+             privs: "ansible_mysql.*:ALL"

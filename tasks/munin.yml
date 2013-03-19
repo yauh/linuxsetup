@@ -1,4 +1,4 @@
-     - name: Monitoring via munin will be installed
+     - name: Monitoring | Monitoring via munin will be installed
        action: apt pkg=$item state=installed
        with_items:
           - munin
@@ -12,41 +12,39 @@
        notify: restart munin
        tags: monitoring 
 
-     - name: Grab munin plugins
+     - name: Monitoring | Grab munin plugins
        action: get_url url=$item dest=/usr/share/munin/plugins/ mode=0755
        with_items:
           - https://raw.github.com/munin-monitoring/contrib/master/plugins/nginx/nginx-combined
           - https://raw.github.com/munin-monitoring/contrib/master/plugins/nginx/nginx_memory
           - https://raw.github.com/munin-monitoring/contrib/master/plugins/mysql/mysql_size_all
-          - https://raw.github.com/munin-monitoring/contrib/master/plugins/munin/munin_stats_plugins
           - https://raw.github.com/munin-monitoring/contrib/master/plugins/mysql/mysql_report
           - https://raw.github.com/munin-monitoring/contrib/master/plugins/mysql/mysql_size_ondisk
           - https://raw.github.com/munin-monitoring/contrib/master/plugins/mysql/mysql_size_all
           - https://raw.github.com/munin-monitoring/contrib/master/plugins/nginx/php5-fpm_status
        tags: monitoring 
 
-     - name: Activate plugins
+     - name: Monitoring | Activate plugins
        action: file src=/usr/share/munin/plugins/$item dest=/etc/munin/plugins/$item state=link
        with_items:
           - nginx-combined
           - nginx_memory
           - mysql_size_all
-          - munin_stats_plugins
           - mysql_report
           - mysql_size_ondisk
           - mysql_size_all
           - php5-fpm_status
        tags: monitoring
 
-     - name: Set up munin as a website 
+     - name: Monitoring | Set up munin as a website 
        action: template src=templates/munin.nginx.j2 dest=/etc/nginx/sites-available/${munin_subdomain}.${ansible_domain}.conf owner=root group=root mode=0755
        tags: monitoring 
 
-     - name: Activate munin website 
+     - name: Monitoring | Activate munin website 
        file: src=/etc/nginx/sites-available/${munin_subdomain}.${ansible_domain}.conf dest=/etc/nginx/sites-enabled/${munin_subdomain}.${ansible_domain}.conf state=link
        tags: monitoring 
        
-     - name: Munin should be running
+     - name: Monitoring | Munin should be running
        action: service name=munin state=running
        tags: monitoring 
 

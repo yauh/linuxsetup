@@ -1,8 +1,23 @@
 server {
-  listen 80 default_server;
+  listen      80 default_server; # this is our default server
   server_name www.{{ ansible_domain }};
-  root /var/www/;
+  root        /var/www/;
+  expires     max;
+
   location / {
     index index.html;
   }
+
+  ## Only allow these request methods ##
+  if ($request_method !~ ^(GET|HEAD|POST)$ ) {
+    return 444;
+  }
+  ## Do not accept DELETE, SEARCH and other methods ##
+
+
+  # serve static files more efficiently
+  include /etc/nginx/nginx_static.conf;
+
+  # enable PHP for this site
+  include /etc/nginx/nginx_php-fpm.conf;
 }

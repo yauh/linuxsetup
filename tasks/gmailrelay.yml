@@ -1,18 +1,24 @@
-     - name: Install exim4 and adjust /etc/exim4/update-exim4.conf.conf
+     - name: Mail | Install exim4 and adjust /etc/exim4/update-exim4.conf.conf
        action: apt pkg=$item state=latest
        with_items:
           - exim4 
        action: template src=templates/update-exim4.j2 dest=/etc/exim4/update-exim4.conf.conf
+       register: exim_config_result
        tags: mail 
 
-     - name: create /etc/exim4/exim4.conf.template
+     - name: Mail | create /etc/exim4/exim4.conf.template
        action: template src=templates/exim4.conf.j2 dest=/etc/exim4/exim4.conf.template
        tags: mail 
 
-     - name: update-exim4.conf
-       action: command update-exim4.conf
+     - name: Mail | update-exim4.conf
+       action: /usr/sbin/update-exim4.conf
+       only_if: '${exim_config_result.changed}'
        tags: mail 
 
-     - name: Exim4 should be restarted
+     - name: Mail | Exim4 should be restarted
        action: command service exim4 restart
+       tags: mail 
+
+     - name: Mail | Send a testmail
+       action: shell cat /etc/hostname | mail -s 'Sent from Ansible' ${admin_email}
        tags: mail 
