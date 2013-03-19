@@ -13,8 +13,8 @@
 
   vars_files:
      - variables/common.yml
-     - variables/private.yml
      - variables/mysql.yml
+     - private/variables.yml
 
   tasks:
   - include: tasks/update.yml
