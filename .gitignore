@@ -3,6 +3,7 @@
 .LSOverride
 Icon
 
+variables/private.yml
 
 # Thumbnails
 ._*
