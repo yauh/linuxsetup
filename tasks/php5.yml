@@ -12,7 +12,9 @@
           - php5-xmlrpc
        tags: php
     
-     - name: PHP5 | Set php-fpm for nginx config file
+     - name: PHP5 | Set php-fpm for nginx config file and restart nginx/php5-fpm
        action: template src=templates/nginx_php-fpm.conf.j2 dest=/etc/nginx/nginx_php-fpm.conf owner=root group=root mode=0755
-       notify: restart nginx
+       notify: 
+          - restart nginx
+          - restart php5-fpm
        tags: php 

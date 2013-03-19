@@ -1,0 +1,2 @@
+    - name: restart php5-fpm
+      action: service name=php5-fpm state=restarted

@@ -13,6 +13,8 @@
           - tar
           - bzip2
           - htop
+          - screen
+          - tree
        tags: common  
 
      - name: "Common | All your base are belong to ansible"
@@ -21,4 +23,8 @@
 
      - name: "Common | Set the timezone"
        action: command /bin/echo ${timezone} > /etc/timezone  && command dpkg-reconfigure -f noninteractive tzdata
+       tags: common
+
+     - name: "Common | Use ssh keys"
+       authorized_key: user=stephan key='$FILE(~/.ssh/id_rsa.pub)'
        tags: common

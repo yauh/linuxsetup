@@ -41,9 +41,6 @@
        action: template src=templates/www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=0600
        tags: php
 
-
-
-
      - name: Web | Webserver should be running
        action: service name=nginx state=running
        tags: web 

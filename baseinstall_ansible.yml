@@ -4,13 +4,6 @@
   user: stephan
   sudo_user: root
 
-  vars:
-     muninaddress: '*'
-     muninport: 4949
-     munin_subdomain: munin
-     timezone: Europe/Berlin
-     logwatch_email: stephan@yauh.de
-
   vars_files:
      - variables/common.yml
      - variables/monitoring.yml
@@ -25,10 +18,10 @@
   - include: tasks/common.yml
   - include: tasks/gmailrelay.yml
   - include: tasks/fileserver.yml
-  - include: tasks/devtools.yml
+  - include: tasks/devtools.yml  
+  - include: tasks/php5.yml
   - include: tasks/webserver.yml
   - include: tasks/munin.yml
-  - include: tasks/php5.yml
   - include: tasks/mysql.yml
   - include: tasks/secure.yml
 
@@ -36,3 +29,5 @@
   - include: handlers/webserver.yml
   - include: handlers/munin.yml
   - include: handlers/secure.yml
+  - include: handlers/mysql.yml
+  - include: handlers/php5.yml

@@ -1,5 +1,5 @@
 server {
-  listen      80 default_server; # this is our default server
+  listen      {{ web.port }} default_server; # this is our default server
   server_name www.{{ ansible_domain }};
   root        {{ web.root }};
   expires     max;

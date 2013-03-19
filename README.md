@@ -3,6 +3,12 @@ About
 
 These are the scripts I use to set up Debian boxes for development, testing, and sometimes even production. Find out more about [Ansible](http://ansible.cc/).
 
+Requirements
+------------
+
+* `apt-get install sudo
+* user added to sudoers file
+
 Playbooks
 ---------
 ### common
