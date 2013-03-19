@@ -4,6 +4,7 @@
 Icon
 
 variables/private.yml
+private/
 
 # Thumbnails
 ._*
