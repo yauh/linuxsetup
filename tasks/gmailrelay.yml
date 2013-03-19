@@ -11,7 +11,7 @@
        tags: mail 
 
      - name: Mail | update-exim4.conf
-       action: /usr/sbin/update-exim4.conf
+       action: command /usr/sbin/update-exim4.conf
        only_if: '${exim_config_result.changed}'
        tags: mail 
 

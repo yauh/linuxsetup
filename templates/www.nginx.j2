@@ -1,7 +1,7 @@
 server {
   listen      80 default_server; # this is our default server
   server_name www.{{ ansible_domain }};
-  root        /var/www/;
+  root        {{ web.root }};
   expires     max;
 
   location / {

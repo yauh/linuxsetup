@@ -8,7 +8,11 @@
        tags: monitoring 
 
      - name: Set munin-node config file
-       action: template src=templates/munin.conf.j2 dest=/etc/munin/munin-node.conf owner=root group=root mode=0755
+       action: template src=templates/munin-node.conf.j2 dest=/etc/munin/munin-node.conf owner=root group=root mode=0755
+       tags: monitoring 
+
+     - name: Set munin config file
+       action: template src=templates/munin.conf.j2 dest=/etc/munin/munin.conf owner=root group=root mode=0755
        notify: restart munin
        tags: monitoring 
 
@@ -34,6 +38,10 @@
           - mysql_size_ondisk
           - mysql_size_all
           - php5-fpm_status
+       tags: monitoring
+
+     - name: Security | Make logwatch mail $logwatch_email daily
+       shell: sed -e  "s/\[localhost.localdomain\]/[${ansible_fqdn}]/" /etc/munin/munin.conf
        tags: monitoring
 
      - name: Monitoring | Set up munin as a website 

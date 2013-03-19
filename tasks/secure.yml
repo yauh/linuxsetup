@@ -7,7 +7,7 @@
 
      - name: Security | Disallow root SSH access
        action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
-       notify: Restart sshd
+       notify: restart ssh
        tags: secure
 
      - name: Security | Make logwatch mail $logwatch_email daily

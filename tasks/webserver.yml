@@ -7,7 +7,7 @@
        tags: web 
 
      - name: Web | Main nginx configuration file
-       action: template src=templates/nginx.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0600
+       action: template src=templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0600
        tags: web
 
      - name: Web | Serve static files efficiently
@@ -25,6 +25,24 @@
      - name: Web | Activate default www site  
        file: src=/etc/nginx/sites-available/www.${ansible_domain}.conf dest=/etc/nginx/sites-enabled/www.${ansible_domain}.conf owner=root group=root state=link
        tags: web 
+
+     - name: Web | Create web root 
+       file: dest=${web.root} state=directory owner=root group=root
+       tags: web 
+
+     - name: Web | Copy files into webroot
+       copy: src=files/$item dest=${web.root}$item owner=root group=root mode=0755
+       with_items:
+         - index.html
+         - index.php
+       tags: web 
+
+     - name: Web | Setup PHP5-FPM for nginx
+       action: template src=templates/www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=0600
+       tags: php
+
+
+
 
      - name: Web | Webserver should be running
        action: service name=nginx state=running

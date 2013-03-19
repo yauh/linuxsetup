@@ -74,5 +74,5 @@
  
 - name: MySQL | Removes the MySQL test database
   action: mysql_db login_user=root login_password=${mysql.root_password} db=test state=absent
-  notify: MySQL | Restart mysql
+  notify: restart mysql
   tags: mysql

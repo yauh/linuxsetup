@@ -13,6 +13,10 @@
 
   vars_files:
      - variables/common.yml
+     - variables/monitoring.yml
+     - variables/php5.yml
+     - variables/secure.yml
+     - variables/webserver.yml
      - variables/mysql.yml
      - private/variables.yml
 
@@ -22,8 +26,8 @@
   - include: tasks/gmailrelay.yml
   - include: tasks/fileserver.yml
   - include: tasks/devtools.yml
-  - include: tasks/munin.yml
   - include: tasks/webserver.yml
+  - include: tasks/munin.yml
   - include: tasks/php5.yml
   - include: tasks/mysql.yml
   - include: tasks/secure.yml

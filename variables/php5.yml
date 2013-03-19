@@ -1,1 +1,9 @@
      php_version: 5
+     max_execution_time: 30
+     max_input_time: 60
+     memory_limit: 128M
+     upload_max_filesize: 2M
+     allow_url_fopen: On
+     allow_url_include: Off
+     session.cookie_httponly: 1
+     display_errors: Off
