@@ -1,6 +1,6 @@
 server {
   server_name {{ munin_subdomain }}.{{ ansible_domain }};
-  listen {{ web.port }}
+  listen {{ web.port }};
   root /var/cache/munin/www/;
   # Restrict Munin access
   #auth_basic "Restricted";
