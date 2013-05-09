@@ -1,18 +1,68 @@
+# Ignore editors
+# Espresso
+*.esproj
+
+# Netbeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# PHPStorm
+.idea/
+
+# Sublime Text
+*.sublime-workspace
+
+# TextMate
+*.tmproj
+*.tmproject
+tmtags
+
+# SASS
+*.sass-cache
+
+# vim
+.*.s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# ignore OS
+.Spotlight-V100
+.Trashes
+._*
 .DS_Store
 .AppleDouble
 .LSOverride
 Icon
 
+# Frameworks
+# Yii
+assets/
+protected/runtime/
+themes/classic/views/
+
+# Node
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+npm-debug.log
+node_modules
+
 variables/private.yml
 private/
-
-# Thumbnails
-._*
-
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
-# ignore netbeans projects as well
-nbproject/
-
