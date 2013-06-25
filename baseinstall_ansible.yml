@@ -22,6 +22,7 @@
   - include: tasks/php5.yml
   - include: tasks/webserver.yml
   - include: tasks/munin.yml
+  - include: tasks/node.yml
   - include: tasks/mysql.yml
   - include: tasks/secure.yml
 
