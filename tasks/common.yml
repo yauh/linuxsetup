@@ -1,3 +1,6 @@
+     - name: "Common | ensure apt cache is up to date"
+       action: apt update_cache=yes
+
      - name: "Common | Some common software should be installed"
        action: apt pkg=$item state=latest install-recommends=no
        with_items:
