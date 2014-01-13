@@ -1,2 +1,4 @@
      timezone: Europe/Berlin
-     admin_email: stephan@yauh.de
+     admin_email: admin@example.org
+     user: ansible
+     bootstrap_password: iWnterCmingiS

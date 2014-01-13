@@ -1,34 +1,26 @@
 ---
-- hosts: local
+- hosts: parallels
   sudo: True
-  user: stephan
+  user: ansible
   sudo_user: root
 
   vars_files:
      - variables/common.yml
-     - variables/monitoring.yml
-     - variables/php5.yml
-     - variables/secure.yml
-     - variables/webserver.yml
-     - variables/mysql.yml
-     - private/variables.yml
+     - variables/lamp.yml
+     - variables/mail.yml
+     - variables/private.yml
 
   tasks:
   - include: tasks/update.yml
   - include: tasks/common.yml
-  - include: tasks/gmailrelay.yml
-  - include: tasks/fileserver.yml
-  - include: tasks/devtools.yml  
-  - include: tasks/php5.yml
-  - include: tasks/webserver.yml
-  - include: tasks/munin.yml
-  - include: tasks/node.yml
-  - include: tasks/mysql.yml
+  - include: tasks/devtools.yml 
+  - include: tasks/msmtp.yml  
+  - include: tasks/lamp.yml
   - include: tasks/secure.yml
+  - include: tasks/yii.yml
+  - include: tasks/websites.yml
 
   handlers:
-  - include: handlers/webserver.yml
+  - include: handlers/lamp.yml
   - include: handlers/munin.yml
   - include: handlers/secure.yml
-  - include: handlers/mysql.yml
-  - include: handlers/php5.yml

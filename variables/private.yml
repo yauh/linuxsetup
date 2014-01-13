@@ -1,4 +1,2 @@
-     gmail_domain: gmail.com
-     gmail_user: user
-     gmail_password: pass
-
+     # password in cleartext as it is provided via user module
+     new_root_password: Tp1pR3escteW4paowss

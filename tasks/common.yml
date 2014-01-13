@@ -1,5 +1,5 @@
      - name: "Common | Some common software should be installed"
-       action: apt pkg=$item state=latest install-recommends=no
+       action: apt pkg={{ item }} state=latest
        with_items:
           - facter
           - vim-nox 
@@ -23,9 +23,5 @@
        tags: common
 
      - name: "Common | Set the timezone"
-       action: command /bin/echo ${timezone} > /etc/timezone  && command dpkg-reconfigure -f noninteractive tzdata
-       tags: common
-
-     - name: "Common | Use ssh keys"
-       authorized_key: user=stephan key='$FILE(~/.ssh/id_rsa.pub)'
+       action: command /bin/echo {{ timezone }} > /etc/timezone  && command dpkg-reconfigure -f noninteractive tzdata
        tags: common

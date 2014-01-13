@@ -1,0 +1,142 @@
+---
+##
+# LAMP stack setup.
+#
+#
+- name: LAMP | Apache should be installed
+  action: apt pkg={{ item }} state=latest
+  with_items:
+    - apache2
+  tags: lamp
+
+- name: LAMP | MySQL should be installed
+  action: apt pkg={{ item }} state=latest
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+    - automysqlbackup
+  tags: lamp
+
+- name: LAMP | Ensure no /root/.my.cnf is leftover
+  file: path=/root/.my.cnf state=absent
+  tags: lamp
+
+- name: LAMP | Start the MySQL service
+  action: service name=mysql state=started
+  tags: lamp
+ 
+# On first attempt, we just accept the failure to handle case where ~/.my.cnf has been deleted
+# but the root password is already set
+# In this case, mysql_user will fail connecting to mysql
+- name: LAMP | Sets the root password (first attempt / failure is ok)
+  action: mysql_user user=root password="{{ mysql.root_password }}"
+  ignore_errors: yes
+  tags: lamp
+ 
+- name: LAMP | Sets the root password (second attempt)
+  action: mysql_user user=root password="{{ mysql.root_password }}"
+  ignore_errors: yes
+  tags: lamp
+   
+- name: LAMP | Configures for easy access as root user
+  action: template src=templates/root-my-cnf.j2 dest=/root/.my.cnf owner=root mode=0600
+  tags: lamp
+  
+- name: LAMP | Deletes anonymous MySQL server user for {{ ansible_hostname }}
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="" host="{{ ansible_hostname }}" state="absent"
+  tags: lamp
+ 
+- name: LAMP | Deletes anonymous MySQL server user for localhost
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="" state="absent"
+  tags: lamp
+ 
+- name: LAMP | Create Database
+  action: mysql_db login_user=root login_password={{ mysql.root_password }} name="{{ item.name }}"
+  with_items:  mysql.users
+  when:  mysql.users is defined
+  tags: lamp
+
+- name: LAMP | Adds required MySQL users
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="{{ item.name }}" password="{{ item.password }}" priv="{{ item.privs }}"
+  with_items:  mysql.users
+  when:  mysql.users is defined
+  tags: lamp
+ 
+- name: LAMP | Secures the MySQL root user for IPV6 localhost (::1) with mysql.root_password
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="root" password="{{ mysql.root_password }}" host="::1"
+  tags: lamp
+ 
+- name: LAMP | Secures the MySQL root user for IPV4 localhost (127.0.0.1)
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="root" password="{{ mysql.root_password }}" host="127.0.0.1"
+  tags: lamp
+ 
+- name: LAMP | Secures the MySQL root user for localhost domain (localhost)
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="root" password="{{ mysql.root_password }}" host="localhost"
+  tags: lamp
+
+- name: LAMP | Secures the MySQL root user for {{ ansible_hostname domain }}
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="root" password="{{ mysql.root_password }}" host="{{ansible_hostname}}"
+  tags: lamp
+ 
+- name: LAMP | Secures the MySQL root user for {{ ansible_fqdn domain }}
+  action: mysql_user login_user=root login_password={{ mysql.root_password }} user="root" password="{{ mysql.root_password }}" host="{{ansible_fqdn}}"
+  tags: lamp
+
+- name: Tumego | Create automysqlbackup directory
+  file: path=/etc/automysqlbackup state=directory owner=root mode=0644
+  tags: lamp
+
+- name: Tumego | Create backup directory
+  file: path=/home/ansible/backup/db state=directory
+  tags: lamp
+
+- name: LAMP | Configure automysqlbackup 1/2
+  action: template src=templates/automysqlbackup/automysqlbackup-conf.j2 dest=/etc/automysqlbackup/automysqlbackup.conf owner=root group=root mode=0644
+  tags: lamp
+
+- name: LAMP | Configure automysqlbackup 2/2
+  action: template src=templates/automysqlbackup/automysqlbackup-conf.j2 dest=/etc/automysqlbackup/myserver.conf owner=root group=root mode=0644
+  tags: lamp
+
+- name: LAMP | Executable for automysqlbackup
+  copy: src=templates/automysqlbackup/automysqlbackup dest=/usr/local/bin/automysqlbackup owner=root mode=0755
+  tags: lamp
+ 
+- name: LAMP | cronjob for automysqlbackup at 4:23 am each day
+  cron: name="Backup DB" hour="4" minute="23" job="/usr/local/bin/automysqlbackup > /dev/null"
+  tags: lamp
+
+- name: LAMP | Removes the MySQL test database
+  action: mysql_db login_user=root login_password={{ mysql.root_password }} db=test state=absent
+  notify: restart mysql
+  tags: lamp
+  
+- name: LAMP | PHP should be installed
+  action: apt pkg={{ item }} state=latest
+  with_items:
+    - php5
+    - php5-cli
+    - php5-fpm
+    - php5-curl 
+    - php5-gd 
+    - php5-mysql 
+    - php5-mcrypt
+    - php5-snmp
+    - php5-imap
+    - php5-memcache
+    - php5-xmlrpc
+    - libapache2-mod-php5
+  tags: lamp
+
+- name: LAMP | PHP.ini for the world to see
+  action: template src=templates/php.ini.j2 dest=/etc/php5/apache2/php.ini owner=root group=root mode=0755
+  tags: lamp
+
+- name: LAMP | No notices in PHP
+  action: lineinfile dest=/etc/php5/fpm/php.ini regexp="^error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT" line="error_reporting = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED"  state=present
+  tags: lamp  
+
+- name: LAMP | A2enmods
+  action: command a2enmod rewrite ssl vhost_alias
+  tags: lamp

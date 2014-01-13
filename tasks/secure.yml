@@ -1,8 +1,9 @@
      - name: Security | Hardening packages
-       action: apt pkg=$item state=latest
+       action: apt pkg={{ item }} state=latest
        with_items:
           - fail2ban
           - logwatch
+          - unattended-upgrades
        tags: secure
 
      - name: Security | Disallow root SSH access
@@ -10,6 +11,28 @@
        notify: restart ssh
        tags: secure
 
-     - name: Security | Make logwatch mail $logwatch_email daily
-       action: lineinfile dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto $logwatch_email --detail high" state=present create=yes
+     - name: Security | Change root password
+       action: "shell echo root:{{ new_root_password }} | chpasswd"
+       tags: secure
+       
+     - name: Security | Make logwatch mail daily
+       action: lineinfile dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ admin_email }} --detail high" state=present create=yes
+       tags: secure
+
+     - name: Security | enable automatic security updates
+       apt: pkg=unattended-upgrades
+            state=latest
+            update_cache=yes
+       tags: secure
+
+     - name: Security | configure automatic updates settings
+       template: dest=/etc/apt/apt.conf.d/02periodic
+            src=templates/apt-periodic.j2
+            backup=yes
+       tags: secure
+
+     - name: Security | configure automatic security update
+       template: dest=/etc/apt/apt.conf.d/50unattended-upgrades
+            src=templates/unattended-upgrades.j2
+            backup=yes
        tags: secure

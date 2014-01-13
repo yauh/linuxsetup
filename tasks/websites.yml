@@ -1,0 +1,23 @@
+     - name: YAUH | Configuration file for our site
+       action: template src=templates/000-ansible.j2 dest=/etc/apache2/sites-available/000-ansible
+       tags: websites
+
+#     - name: SSL | Create cert directory
+#       file: path=/etc/apache2/crt state=directory owner=root mode=0644
+#       tags: websites
+#
+#     - name: SSL | Copy ssl key
+#       action: template src=templates/yauh_ssl_out.key dest=/etc/apache2/crt/yauh_ssl.key owner=root mode=0400
+#       tags: websites
+#
+#     - name: SSL | Copy ssl cert
+#       action: template src=templates/yauh_ssl.crt dest=/etc/apache2/crt/yauh_ssl.crt owner=root mode=0400
+#       tags: websites
+#       
+     - name: YAUH | Enable default site
+       action: command /usr/sbin/a2ensite 000-yauh.de
+       tags: websites
+
+     - name: YAUH | Restart the apache service
+       action: service name=apache2 state=started
+       tags: websites

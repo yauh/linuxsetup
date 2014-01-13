@@ -1,0 +1,14 @@
+defaults
+tls on
+tls_starttls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+port 25
+
+account default
+host {{ mail_host }}
+port 587
+auth on
+user {{ mail_user }}
+password {{ mail_password }}
+from {{ admin_email }}
+logfile /var/log/msmtp.log

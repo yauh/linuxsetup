@@ -1,0 +1,15 @@
+     - name: Yii | Grab Yii Framework 1.1.14
+       action: get_url url={{ item }} dest={{ web.root }}yii.tar.gz mode=0755
+       with_items:
+          - https://github.com/yiisoft/yii/releases/download/1.1.14/yii-1.1.14.f0fee9.tar.gz
+       tags: yii 
+
+
+     - name: Yii | Extract Yii Framework
+       action: command tar xzvf {{ web.root }}yii.tar.gz -C {{ web.root }}
+       tags: yii
+
+     - name: Yii | Make it /var/www/yii
+       file: state=link src=/var/www/yii-1.1.14.f0fee9 dest=/var/www/yii
+       tags: yii
+

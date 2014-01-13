@@ -1,5 +1,5 @@
      - name: Dev | Development software should be installed
-       action: apt pkg=$item state=latest
+       action: apt pkg={{ item }} state=latest
        with_items:
           - make
           - gcc

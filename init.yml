@@ -1,0 +1,24 @@
+---
+- hosts: parallels
+  user: root
+
+  vars:
+     user: ansible
+     user_password: $1$$$UMYDU6b06auQqgJWoSx2.1
+
+  tasks:
+     - name: "Init | Set up an account"
+       user: home=/home/{{ user }} name={{ user }} groups=sudo password={{ user_password }} shell=/bin/bash state=present
+
+     - name: "Init | Add RSA key to the remote host"
+       authorized_key: user='{{ user }}' key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+     - name: "Init | Some software should be installed"
+       action: apt pkg={{ item }} state=latest
+       with_items:
+          - sudo
+          - openssh-server
+          - ssh
+
+     - name: "Init | Enable sudo without password (removes need for -K)"
+       action: "lineinfile dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL'"

@@ -1,0 +1,22 @@
+     - name: Mail | Install msmtp
+       action: apt pkg={{ item }} state=latest
+       with_items:
+          - msmtp
+          - msmtp-mta
+          - ca-certificates
+       tags: mail 
+       
+     - name: Mail | Adjust /etc/msmtprc
+       action: template src=templates/msmtprc.j2 dest=/etc/msmtprc
+       tags: mail 
+
+     - name: Mail | Remove exim4-base and exim4-config
+       apt: pkg={{ item }} state=absent
+       with_items:
+          - exim4-base
+          - exim4-config
+       tags: mail 
+
+     - name: Mail | Send a testmail
+       shell: cat /etc/hostname | mail -s test {{ admin_email }}
+       tags: mail 

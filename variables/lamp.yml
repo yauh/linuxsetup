@@ -1,0 +1,28 @@
+     php_version: 5
+     max_execution_time: 30
+     max_input_time: 60
+     memory_limit: 128M
+     upload_max_filesize: 8M
+     allow_url_fopen: On
+     allow_url_include: Off
+     session.cookie_httponly: 1
+     display_errors: Off
+     session:
+        cookie_httponly: 1
+     mysql:
+        root_password: 12345678
+        backup_user: BackupUser
+        backup_password: 87654321
+        users:
+           - name: ansible_mysql
+             password: ansible_mysql_password
+             privs: "ansible_mysql.*:ALL"
+           - name: myTumegoUserAcc
+             password: Zmo!Ishe8T1h2asAesGeJU
+             privs: "TumegoDB.*:ALL"
+           - name: BackupUser
+             password: 87654321
+             privs: "*.*:SELECT,LOCK TABLES"
+     web:
+        root: /var/www/
+        port: 80
