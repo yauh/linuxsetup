@@ -1,7 +1,7 @@
 ---
 - hosts: all
   sudo: True
-  user: ansible
+  user: stephan
   sudo_user: root
 
   vars_files:
