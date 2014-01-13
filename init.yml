@@ -1,9 +1,9 @@
 ---
-- hosts: parallels
+- hosts: all
   user: root
 
   vars:
-     user: ansible
+     user: stephan
      user_password: $1$$$UMYDU6b06auQqgJWoSx2.1
 
   tasks:

@@ -1,5 +1,5 @@
 ---
-- hosts: parallels
+- hosts: all
   sudo: True
   user: ansible
   sudo_user: root
