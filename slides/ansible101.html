@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Ansible - Infrastruktur als Code</title>
+    <title>Automatisierte Infrastruktur mit Ansible</title>
 
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/night.css" id="theme">
@@ -14,197 +14,281 @@
 
 <body>
 
-    <div class="reveal">
+<div class="reveal">
 
-        <div class="slides">
-            <section>
-                <h1>Infrastruktur mit Ansible</h1>
-                <div>
-                    <img src="img/automate.png">
-                    <br>
-                    <small><a href="mailto:stephan@yauh.de?subject=caspermetmeteor">Stephan Hochhaus</a> (<a href="https://twitter.com/yauh">@yauh</a>) 15. Januar 2014.</small>
-                </div>
-            </section>
-            <section>
-                <section>
-                    <div>
-                        <img src="img/mynameis.jpg">
-                    </div>
-                </section>
-                <section>
-                    <h2>Wie sieht eure IT-Infrastruktur aus?</h2>
-                    <div>
-                       <ul>
-                           <li>Wer hat einen eigenen (Web-)Server?</li>
-                           <li>Welches Betriebssystem?</li>
-                           <li>Wie viele Server sind es?</li>
-                           <li>Wie oft setzt ihr sie neu auf?</li>
-                           <li>Wie lange dauert das Aufsetzen?</li>
-                           <li>Wer hat schonmal ein Tutorial verfasst?</li>
-                       </ul>
-                    </div>
-                </section>
-                <section>
-                    <h2>Meine Vorgehensweise</h2>
-                    <div>
-                        <ol>
-                            <li>Grundsystem per Hand installieren</li>
-                            <li>Ausgefeilte shell-Skripte für Pakete</li>
-                            <li>Manuelles Anpassen von Konfigurationsdateien</li>
-                            <li>Fertiges System</li>
-                            <li>Ausprobieren von neuen Installation</li>
-                            <li>Zerschießen von funktionierenden Komponenten und zurück zu 1</li>
-                        </ol>
-                    </div>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <div>
-                        <img src="img/geeks.png">
-                    </div>
-                </section>
-                <section>
-                    <h2>Vorteile von Automatisierung</h2>
-                    <div>
+<div class="slides">
+<section>
+    <h1>Infrastruktur mit Ansible</h1>
 
-                        <ul>
-                            <li>Beliebige (und leichte) Wiederholbarkeit (Large Scale)</li>
-                            <li>Hohe Geschwindigkeit von Deployments</li>
-                            <li>Wiederherstellen von bekannten Zuständen</li>
-                            <li>Keine tiefen Systemkenntnisse notwendig</li>
-                        </ul>
-                    </div>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <div>
-                        <h2>Hallo Ansible</h2>
-                        <img src="img/logo-ansible.png">
-                    </div>
-                </section>
-                <section>
-                    <h2>Ansible ist</h2>
-                    <div>
-                        <ul>
-                            <li>Leistungsfähige automation engine</li>
-                            <li>Keine Programmierkenntnisse notwendig</li>
-                            <li>Keine Agents auf Zielsystemen notwendigL</li>
-                        </ul>
-                    </div>
-                </section>
-                <section>
-                    <h2>Im Vergleich zu Puppet und Chef</h2>
-                    <div>
-                        <ol>
-                            <li>automate your browser to scrape stuff</li>
-                            <li>test sites and apps (which is what we talk about today)</li>
-                        </ol>
-                    </div>
-                </section>
-                <section>
-                    <div><img src="img/headless.png">
-                        <p>(It just does, but that's not the topic of this presentation.)</p>
-                    </div>
-                </section>
-            </section>
-            <section>
-                    <h2>Kernbestandteile von Ansible</h2>
-                    <div>
-                        <ul>
-                            <li>Inventory</li>
-                            <li>Module</li>
-                            <li>Playbooks</li>
-                        </ul>
-                    </div>
-            </section>
-            <section>
-                <section>
-                    <h2>Inventory: Hosts und Gruppen</h2>
-                    <div>
-                        <ul>
-                            <li></li>
-                            <li>Module</li>
-                            <li>Playbooks</li>
-                        </ul>
-                    </div>
-                </section>
-                <section>
-                    <h2>Sind alle da?</h2>
-                    <div>
-                        <img src="img/ping.png">
-
-                    </div>
-                </section>
-
-            <section>
-                <h2>Look at our capture</h2>
-                <div><img src="img/snapshot.png">
-                </div>
-            </section>
-            <section>
-                <h2>Hands on</h2>
-                <div><h3>Let's test the examples</h3>
-                    <ul>
-                        <li>Gentle introduction - <a href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/simpletest.js">simpletest.js</a>
-                        </li>
-                        <li>Basic functionality - <a href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/todotest.js">todotest.js</a>
-                        </li>
-                        <li>Logging in and setting up a party - <a href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/partiestest.js">partiestest.js</a></li>
-                    </ul>
-                </div>
-            </section>
-        </section>
-            <section>
-                <h2>Und jetzt in schön: GUI</h2>
-                <div>
-                    <img src="img/awx.png">
-                </div>
-            </section>
-
-            <section>
-                <h2>Configuration Management</h2>
-                <div><ul>
-                    <li><a href="http://ansibleworks.com">Ansible</a> (YAML)</li>
-                    <li><a href="http://puppetlabs.com">Puppet</a> (Ruby)</li>
-                    <li><a href="http://www.getchef.com">Chef</a> (Ruby/Git)</li>
-                    <li><a href="http://cfengine.com">cfengine</a></li>
-                    <li><a href="http://www.saltstack.com">salt</a></li>
-                </ul></div>
-            </section>
-
-        <section>
-            <h2>Fragen?</h2>
-            <div><img src="img/questions.png">
-            </div>
-        </section>
-        <section>
-            <div><h3>Danke!</h3><img src="img/docdalek.gif">
-                <small>Ich blogge unter <a href="http://yauh.de">yauh.de</a>, tweete als <a href="https://twitter.com/yauh">@yauh</a>, +1 als <a href="https://plus.google.com/+StephanHochhaus/">StephanHochhaus</a> und forke als <a href="https://github.com/perlmonkey/">perlmonkey</a>.<br /><a href="https://github.com/perlmonkey/linuxsetup">Fork me</a>.</small>
-            </div>
-        </section>
+    <div>
+        <img src="img/automate.png">
+        <br>
+        <small><a href="mailto:stephan@yauh.de?subject=ansible-talk">Stephan Hochhaus</a> (<a
+                href="https://twitter.com/yauh">@yauh</a>) 15. Januar 2014.
+        </small>
     </div>
+</section>
+<section>
+    <section>
+        <div>
+            <img src="img/mynameis.jpg">
+        </div>
+    </section>
+    <section>
+        <h2>Wie sieht eure IT-Infrastruktur aus?</h2>
 
+        <div>
+            <ul>
+                <li>Wer hat einen eigenen (Web-)Server?</li>
+                <li>Welches Betriebssystem?</li>
+                <li>Wie viele Server sind es?</li>
+                <li>Wie oft setzt ihr sie neu auf?</li>
+                <li>Wie lange dauert das Aufsetzen?</li>
+                <li>Wer hat schonmal ein Tutorial verfasst?</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>Meine Vorgehensweise</h2>
 
+        <div>
+            <ol>
+                <li>Grundsystem per Hand installieren</li>
+                <li>Ausgefeilte shell-Skripte für Pakete</li>
+                <li>Manuelles Anpassen von Konfigurationsdateien</li>
+                <li>Fertiges System</li>
+                <li>Ausprobieren von neuen Installation</li>
+                <li>Zerschießen von funktionierenden Komponenten und zurück zu 1</li>
+            </ol>
+        </div>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Geeks sind Gewinnertypen</h2>
+        <div>
+            <img src="img/geeks.png">
+        </div>
+    </section>
+    <section>
+        <h2>Vorteile von Automatisierung</h2>
+
+        <div>
+
+            <ul>
+                <li>Beliebige (und leichte) Wiederholbarkeit (Large Scale)</li>
+                <li>Hohe Geschwindigkeit von Deployments</li>
+                <li>Wiederherstellen von bekannten Zuständen</li>
+                <li>Keine tiefen Systemkenntnisse notwendig</li>
+            </ul>
+        </div>
+    </section>
+</section>
+<section>
+    <section>
+        <div>
+            <h2>Hallo Ansible</h2>
+            <img src="img/logo-ansible.png">
+        </div>
+    </section>
+    <section>
+        <h2>Das bietet Ansible</h2>
+
+        <div>
+            <ul>
+                <li>Leistungsfähige <em>automation engine</em> aus Basis von <em>Playbooks</em></li>
+                <li>Keine Agents auf Zielsystemen notwendig<br/>(SSH-Zugriff reicht)</li>
+                <li>Keine Programmierkenntnisse notwendig<br/>(statt dessen YAML und Jinja2)</li>
+                <li>Aber funktional erweiterbar in beliebigen Programmiersprachen</li>
+                <li>Kein Management von Windows oder Mac OS X</li>
+                <li>Mäßige UI</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>Warum Ansible?</h2>
+
+        <div>
+            <ol>
+                <li>automate your browser to scrape stuff</li>
+                <li>test sites and apps (which is what we talk about today)</li>
+            </ol>
+        </div>
+    </section>
+    <section>
+        <div><img src="img/github_ansible.png">
+
+            <p>(Github Screenshots vom 13.01.2013)</p>
+        </div>
+    </section>
+</section>
+<section>
+    <h2>Kernbestandteile von Ansible</h2>
+
+    <div>
+        <ul>
+            <li>Inventory</li>
+            <li>Module</li>
+            <li>Playbooks</li>
+        </ul>
     </div>
+</section>
+<section>
+    <section>
+        <h2>Inventory</h2>
 
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.min.js"></script>
+        <div>
+            <ul>
+                <li>Hosts</li>
+                <li>Gruppen</li>
+                <li>Playbooks</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>Sind alle da?</h2>
 
-    <script>
+        <div>
+            <img src="img/ping.png">
+
+        </div>
+    </section>
+
+    <section>
+        <h2>Hands on</h2>
+
+        <div><h3>Let's test the examples</h3>
+            <ul>
+                <li>Gentle introduction - <a
+                        href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/simpletest.js">simpletest.js</a>
+                </li>
+                <li>Basic functionality - <a
+                        href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/todotest.js">todotest.js</a>
+                </li>
+                <li>Logging in and setting up a party - <a
+                        href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/partiestest.js">partiestest.js</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Module</h2>
+
+        <div>
+            <ul>
+                <li>Module</li>
+                <li>Playbooks</li>
+            </ul>
+        </div>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Playbooks</h2>
+
+        <div>
+            <ul>
+                <li>Playbooks</li>
+            </ul>
+        </div>
+    </section>
+</section>
+<section>
+    <h2>Ansible installieren</h2>
+
+    <div>
+        <h3>Mac OS X</h3>
+
+        <p>
+        <pre><code class="bash">$ brew install ansible</code></pre>
+        </p>
+        <h3>Linux</h3>
+
+        <p>
+        <pre><code class="bash">$ pip install ansible</code></pre>
+        </p>
+    </div>
+</section>
+<section>
+    <h2>Bei Bedarf auch mit GUI</h2>
+
+    <div>
+        <img src="img/awx.png">
+    </div>
+    <p>Bis zu 10 Hosts lassen sich kostenlos mit AWX managen.</p>
+</section>
+
+<section></section>
+
+<section>
+    <h2>Weitere Ressourcen</h2>
+
+    <div>
+        <ul>
+            <li><a href="https://ops-school.readthedocs.org/en/latest/config_management.html">Configuration
+                Management 101</a></li>
+        </ul>
+    </div>
+</section>
+<section>
+    <h2>Tools</h2>
+
+    <div>
+        <ul>
+            <li><a href="http://ansibleworks.com">Ansible</a> (YAML)</li>
+            <li><a href="http://puppetlabs.com">Puppet</a> (Ruby)</li>
+            <li><a href="http://www.getchef.com">Chef</a> (Ruby/Git)</li>
+            <li><a href="http://cfengine.com">cfengine</a></li>
+            <li><a href="http://www.saltstack.com">salt</a></li>
+        </ul>
+    </div>
+</section>
+</section>
+<section>
+    <h2>Fragen?</h2>
+
+    <div><img src="img/questions.png">
+    </div>
+</section>
+<section>
+    <div><h3>Danke!</h3><img src="img/docdalek.gif">
+        <small>Ich blogge unter <a href="http://yauh.de">yauh.de</a>, tweete als <a
+                href="https://twitter.com/yauh">@yauh</a>, +1 als <a
+                href="https://plus.google.com/+StephanHochhaus/">StephanHochhaus</a> und forke als <a
+                href="https://github.com/perlmonkey/">perlmonkey</a>.<br/><a
+                href="https://github.com/perlmonkey/linuxsetup">Fork me</a>.
+        </small>
+    </div>
+</section>
+</div>
+
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
 
     Reveal.initialize({
         dependencies: [
             // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
-            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            } },
 
-            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function () {
+                return !!document.body.classList;
+            } },
 
             // Syntax highlight for <code> elements
-            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            } },
 
-            ],
+        ],
         // Display controls in the bottom right corner
         controls: true,
 
@@ -238,7 +322,7 @@
     });
 
 
-    </script>
+</script>
 
-    </body>
+</body>
 </html>
