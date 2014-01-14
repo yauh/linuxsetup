@@ -49,16 +49,16 @@
         </div>
     </section>
     <section>
-        <h2>Meine Vorgehensweise</h2>
+        <h2>Mein Leben vor Ansible</h2>
 
         <div>
             <ol>
                 <li>Grundsystem per Hand installieren</li>
-                <li>Ausgefeilte shell-Skripte für Pakete</li>
+                <li>Ggf. ausgefeilte shell-Skripte für Pakete ausführen</li>
                 <li>Manuelles Anpassen von Konfigurationsdateien</li>
                 <li>Fertiges System</li>
-                <li>Ausprobieren von neuen Installation</li>
-                <li>Zerschießen von funktionierenden Komponenten und zurück zu 1</li>
+                <li>Ausprobieren von neuer Software/Konfiguration,<br />andere Entwickler auf dem Server/Tests</li>
+                <li>Zerschießen des funktionierenden Systems</li>
             </ol>
         </div>
     </section>
@@ -66,6 +66,7 @@
 <section>
     <section>
         <h2>Geeks sind Gewinnertypen</h2>
+
         <div>
             <img src="img/geeks.png">
         </div>
@@ -74,64 +75,75 @@
         <h2>Vorteile von Automatisierung</h2>
 
         <div>
-
             <ul>
-                <li>Beliebige (und leichte) Wiederholbarkeit (Large Scale)</li>
+                <li>Beliebige (und leichte) Wiederholbarkeit</li>
                 <li>Hohe Geschwindigkeit von Deployments</li>
                 <li>Wiederherstellen von bekannten Zuständen</li>
                 <li>Keine tiefen Systemkenntnisse notwendig</li>
             </ul>
         </div>
     </section>
+    <section>
+        <h2>Wieso nicht Shell/Perl-Skripte?</h2>
+
+        <div>
+            <ul>
+                <li>Skripte werden schnell extrem komplex</li>
+                <li>Idempotenz - Unabhängig vom Ausgangszustand wird ein definierter Endzustand hergestellt<br />(mehrfache Ausführung möglich)</li>
+                <li>Bessere Übersichtlichkeit und Struktur durch Abstraktion</li>
+                <li>Portabilität (z.B. verschiedene Linux Distros)</li>
+                <li>Deklarativer Ansatz erlaubt höhere Produktivität als imperatives Vorgehen<br />(wie soll das Ergebnis aussehen vs. was soll getan werden)</li>
+                <li>Teilen von Playbooks mit Community</li>
+            </ul>
+        </div>
+    </section>
 </section>
 <section>
     <section>
+        <h2>Configuration Management 2014</h2>
+
         <div>
-            <h2>Hallo Ansible</h2>
-            <img src="img/logo-ansible.png">
+            <img src="img/github_ansible.png" height="480px">
+            <p><small>Stand: 13. Januar 2014 auf github</small></p>
         </div>
     </section>
     <section>
-        <h2>Das bietet Ansible</h2>
+       <img src="img/logo-ansible.png">
 
         <div>
             <ul>
                 <li>Leistungsfähige <em>automation engine</em> aus Basis von <em>Playbooks</em></li>
                 <li>Keine Agents auf Zielsystemen notwendig<br/>(SSH-Zugriff reicht)</li>
+                <li>Standardmäßig push-Architektur, pull möglich</li>
                 <li>Keine Programmierkenntnisse notwendig<br/>(statt dessen YAML und Jinja2)</li>
                 <li>Aber funktional erweiterbar in beliebigen Programmiersprachen</li>
                 <li>Kein Management von Windows oder Mac OS X</li>
-                <li>Mäßige UI</li>
+                <li>Integration in Amazon EC2, Rackspace, OpenStack, VMWare, Vagrant, u.a.</li>
+                <li>AWX (Web-GUI)</li>
             </ul>
         </div>
     </section>
-    <section>
-        <h2>Warum Ansible?</h2>
 
-        <div>
-            <ol>
-                <li>automate your browser to scrape stuff</li>
-                <li>test sites and apps (which is what we talk about today)</li>
-            </ol>
-        </div>
-    </section>
-    <section>
-        <div><img src="img/github_ansible.png">
-
-            <p>(Github Screenshots vom 13.01.2013)</p>
-        </div>
-    </section>
 </section>
 <section>
-    <h2>Kernbestandteile von Ansible</h2>
+    <section>
+        <h2>Architekturüberblick</h2>
 
-    <div>
-        <ul>
-            <li>Inventory</li>
-            <li>Module</li>
-            <li>Playbooks</li>
-        </ul>
-    </div>
+        <div>
+            <img src="img/architecture.png" height="520px">
+        </div>
+    </section>
+    <section>
+        <h2>Kernbestandteile von Ansible</h2>
+
+        <div>
+            <ul>
+                <li><strong>Inventory</strong> - Beschreibt die Infrastruktur</li>
+                <li><strong>Module</strong> - Stellen Funktionen zur Verfügung</li>
+                <li><strong>Playbooks</strong> - Führen Aktionen in Infrastruktur durch</li>
+            </ul>
+        </div>
+    </section>
 </section>
 <section>
     <section>
@@ -139,48 +151,88 @@
 
         <div>
             <ul>
-                <li>Hosts</li>
-                <li>Gruppen</li>
-                <li>Playbooks</li>
-            </ul>
-        </div>
-    </section>
-    <section>
-        <h2>Sind alle da?</h2>
-
-        <div>
-            <img src="img/ping.png">
-
-        </div>
-    </section>
-
-    <section>
-        <h2>Hands on</h2>
-
-        <div><h3>Let's test the examples</h3>
-            <ul>
-                <li>Gentle introduction - <a
-                        href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/simpletest.js">simpletest.js</a>
-                </li>
-                <li>Basic functionality - <a
-                        href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/todotest.js">todotest.js</a>
-                </li>
-                <li>Logging in and setting up a party - <a
-                        href="https://github.com/perlmonkey/caspermeetsmeteor/blob/master/partiestest.js">partiestest.js</a>
+                <li><strong>Hosts</strong> - Zielsysteme (Linux)</li>
+                <li><strong>Gruppen</strong> Organisatorische Zuordnung (z.B. geografisch, nach Funktion oder als
+                    Mischung)
                 </li>
             </ul>
         </div>
     </section>
+
+    <section>
+        <h2>Beispiel Hosts-Datei</h2>
+
+            <pre><code class="ini">
+[webserver]
+apache.example.org
+lamp.example.org
+
+[dbserver]
+db.example.org
+lamp.example.org
+
+[test]
+lamp.example.org
+
+[production]
+apache.example.org
+db.example.org
+            </code></pre>
+<p>INI-Format</p>
+    </section>
+
 </section>
 <section>
+
     <section>
-        <h2>Module</h2>
+        <h2>Es gibt Module für</h2>
+        <div>
+            <table>
+                <tr>
+                    <td width="33%">Monitoring</td>
+                    <td width="33%">Net Infrastructure</td>
+                    <td width="33%">Network</td>
+                </tr>
+                <tr>
+                    <td>Notification</td>
+                    <td>Packaging</td>
+                    <td>Source Control</td>
+                </tr>
+                <tr>
+                    <td>System</td>
+                    <td>Utilities</td>
+                    <td>Web Infrastructure</td>
+                </tr>
+                <tr>
+                    <td>Cloud</td>
+                    <td>Commands</td>
+                    <td>Database</td>
+                </tr>
+                <tr>
+                    <td>Files</td>
+                    <td>Internal</td>
+                    <td>Inventory</td>
+                </tr>
+                <tr>
+                    <td>Messaging</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <section>
+        <h2>System: ping</h2>
 
         <div>
-            <ul>
-                <li>Module</li>
-                <li>Playbooks</li>
-            </ul>
+            <img src="img/ping.png" height="550px">
+        </div>
+    </section>
+    <section>
+        <h2>Eigene Module</h2>
+
+        <div>
+           <p>Eigene Module können in Python oder einer beliebigen anderen Programmiersprache(!) verfasst sein.</p>
         </div>
     </section>
 </section>
@@ -190,11 +242,129 @@
 
         <div>
             <ul>
-                <li>Playbooks</li>
+                <li>Playbooks sind deklarative Beschreibungen in YAML<br />(Leerzeichen sind wichtig!)</li>
+                <li>Tasks beschreiben den gewünschten Zustand</li>
+                <li>Können Variablen und Schleifen verwenden</li>
+                <li>Templates und Dateien lassen sich nutzen</li>
             </ul>
         </div>
     </section>
+    <section>
+        <h2>Playbooks</h2>
+
+            <pre><code class="yaml">---
+- hosts: all
+  user: root
+
+  tasks:
+   # Add the user 'kaylee' with a primary group of 'admin'
+   - user: name=kaylee comment="Kaywinnet Lee Frye" group=user
+
+   # Create a 2048-bit SSH key for user kaylee
+   - user: name=kaylee generate_ssh_key=yes ssh_key_bits=2048
+
+   # Remove the user 'kaylee'
+   - user: name=kaylee state=absent remove=yes
+
+                </code></pre>
+    </section>
+    <section>
+        <h2>Play it!</h2>
+
+        <div>
+            <img src="img/kaylee.png">
+        </div>
+    </section>
+    <section>
+        <h2>Variablen für Tasks</h2>
+
+        <div>
+            <p>Tasks können Variablen nutzen</p>
+            <pre><code class="yaml">---
+- hosts: all
+  user: root
+
+  vars:
+    user: stephan
+    user_password: $1$$$UMYDU6b06auQqgJWoSx2.1
+
+  tasks:
+    - name: "Init | Set up an account"
+      user: name={{ user }} password={{ user_password }} shell=/bin/bash
+           </code></pre>
+        </div>
+    </section>
+    <section>
+        <h2>Schleifen mit <em>item</em></h2>
+        <div>
+        <pre><code class="yaml">tasks:
+    - name: "Init | Some software should be installed"
+      action: apt pkg={{ item }} state=latest
+      with_items:
+        - sudo
+        - openssh-server
+        - ssh</code></pre>
+        </div>
+    </section>
+    <section>
+        <h2>Templates und Dateien</h2>
+
+        <div>
+            <ul>
+                <li>Das <strong>Template</strong>-Modul erlaubt dynamische Anpassungen an Konfig-Dateien</li>
+                <li>Mit <strong>Copy</strong> lassen sich Dateien 1:1 kopieren</li>
+            </ul>
+            <pre><code class="yaml">template: src=templates/msmtprc.j2 dest=/etc/msmtprc
+copy: src=templates/backup.sh dest=/usr/local/bin/backup.sh</code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Variablen in Templates</h2>
+
+        <div>
+            <ul>
+                <li>Jinja2 als Template-Sprache</li>
+            </ul>
+            <pre><code class="ini">[client]
+user=root
+password={{ mysql.root_password }}
+            </code></pre>
+            <p>my.cnf.j2</p>
+        </div>
+    </section>
+    <section>
+        <h2>Handlers</h2>
+
+        <div>
+            <ul>
+                <li>Verhalten sich ähnlich zu Tasks</li>
+            </ul>
+        </div>
+        <pre><code class="yaml">handlers:
+    - name: restart mysql
+      action: service name=mysql state=restarted</code></pre>
+    </section>
+    <section>
+        <h2>Tags und Roles</h2>
+
+        <div>
+            <ul>
+                <li><strong>Tags</strong> bündeln Tasks und lassen sich gezielt ausführen</li>
+                <li><strong>Roles</strong> erlauben </li>
+            </ul>
+        </div>
+        <pre><code class="yaml">tasks:
+    - name: LAMP should be installed
+      action: apt pkg={{ item }} state=latest
+      with_items:
+         - apache2
+         - mysql
+         - php5
+      tags: lamp</code></pre>
+    </section>
 </section>
+<section>
 <section>
     <h2>Ansible installieren</h2>
 
@@ -207,7 +377,9 @@
         <h3>Linux</h3>
 
         <p>
-        <pre><code class="bash">$ pip install ansible</code></pre>
+
+        <pre><code class="bash">$ pip install pyyaml jinja2 paramiko
+$ pip install ansible</code></pre>
         </p>
     </div>
 </section>
@@ -219,47 +391,46 @@
     </div>
     <p>Bis zu 10 Hosts lassen sich kostenlos mit AWX managen.</p>
 </section>
-
-<section></section>
-
-<section>
-    <h2>Weitere Ressourcen</h2>
-
-    <div>
-        <ul>
-            <li><a href="https://ops-school.readthedocs.org/en/latest/config_management.html">Configuration
-                Management 101</a></li>
-        </ul>
-    </div>
 </section>
-<section>
-    <h2>Tools</h2>
 
+<section>
+
+<section>
+    <h2>Alternativen</h2>
+<p>Es gibt eine Vielzahl von Tools für<br />automatisiertes Configuration Management:</p>
     <div>
         <ul>
-            <li><a href="http://ansibleworks.com">Ansible</a> (YAML)</li>
-            <li><a href="http://puppetlabs.com">Puppet</a> (Ruby)</li>
-            <li><a href="http://www.getchef.com">Chef</a> (Ruby/Git)</li>
+            <li><a href="http://ansibleworks.com">Ansible</a></li>
+            <li><a href="http://puppetlabs.com">Puppet</a></li>
+            <li><a href="http://www.getchef.com">Chef</a></li>
             <li><a href="http://cfengine.com">cfengine</a></li>
             <li><a href="http://www.saltstack.com">salt</a></li>
         </ul>
     </div>
 </section>
+    <section>
+        <h2>Weitere Ressourcen</h2>
+
+        <div>
+            <ul>
+                <li><a href="https://ops-school.readthedocs.org/en/latest/config_management.html">Configuration
+                    Management 101</a></li>
+            </ul>
+        </div>
+    </section>
 </section>
 <section>
-    <h2>Fragen?</h2>
+    <h2>Automate all the things</h2>
 
-    <div><img src="img/questions.png">
+    <div><img src="img/servers.jpg">
     </div>
 </section>
 <section>
-    <div><h3>Danke!</h3><img src="img/docdalek.gif">
-        <small>Ich blogge unter <a href="http://yauh.de">yauh.de</a>, tweete als <a
-                href="https://twitter.com/yauh">@yauh</a>, +1 als <a
-                href="https://plus.google.com/+StephanHochhaus/">StephanHochhaus</a> und forke als <a
-                href="https://github.com/perlmonkey/">perlmonkey</a>.<br/><a
-                href="https://github.com/perlmonkey/linuxsetup">Fork me</a>.
-        </small>
+    <div><h3><a href="https://github.com/perlmonkey/linuxsetup">Fork me!</a></h3>
+        <p>Ich blogge unter <a href="http://yauh.de">yauh.de</a>,<br /> tweete als <a
+                href="https://twitter.com/yauh">@yauh</a>, <br />+1 als <a
+                href="https://plus.google.com/+StephanHochhaus/">StephanHochhaus</a><br />und pushe als <a
+                href="https://github.com/perlmonkey/">perlmonkey</a>.
     </div>
 </section>
 </div>

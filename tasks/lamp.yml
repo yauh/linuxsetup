@@ -135,6 +135,7 @@
 
 - name: LAMP | No notices in PHP
   action: lineinfile dest=/etc/php5/fpm/php.ini regexp="^error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT" line="error_reporting = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED"  state=present
+  notify: restart apache2
   tags: lamp  
 
 - name: LAMP | A2enmods

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  user: root
+
+  tasks:
+   # Add the user 'kaylee' with a primary group of 'admin'
+   - user: name=kaylee comment="Kaywinnet Lee Frye" group=sudo
+
+   # Create a 2048-bit SSH key for user kaylee
+   - user: name=kaylee generate_ssh_key=yes ssh_key_bits=2048
