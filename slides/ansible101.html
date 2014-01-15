@@ -24,7 +24,7 @@
         <img src="img/automate.png">
         <br>
         <small><a href="mailto:stephan@yauh.de?subject=ansible-talk">Stephan Hochhaus</a> (<a
-                href="https://twitter.com/yauh">@yauh</a>) 15. Januar 2014.
+                href="https://twitter.com/yauh">@yauh</a>) 15. Januar 2014 bei der <a href="http://www.opentechschool.org/dortmund/">OpenTechSchool Dortmund</a>.
         </small>
     </div>
 </section>
@@ -80,6 +80,18 @@
                 <li>Hohe Geschwindigkeit von Deployments</li>
                 <li>Wiederherstellen von bekannten Zuständen</li>
                 <li>Keine tiefen Systemkenntnisse notwendig</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>Und ganz konkret</h2>
+
+        <div>
+            <ul>
+                <li>Schneller Aufbau von Testsystemen</li>
+                <li>Leichter Providerwechsel</li>
+                <li>Continuous-Integration-Workflows realisieren</li>
+                <li>"Zerschossene" Systeme wiederherstellen</li>
             </ul>
         </div>
     </section>
@@ -250,7 +262,7 @@ db.example.org
         </div>
     </section>
     <section>
-        <h2>Playbooks</h2>
+        <h2>Nutzer anlegen und löschen</h2>
 
             <pre><code class="yaml">---
 - hosts: all
@@ -286,11 +298,11 @@ db.example.org
 
   vars:
     user: stephan
-    user_password: $1$$$UMYDU6b06auQqgJWoSx2.1
+    user_pwd: $1$$$UMYDU6b06auQqgJWoSx2.1
 
   tasks:
     - name: "Init | Set up an account"
-      user: name={{ user }} password={{ user_password }} shell=/bin/bash
+      user: name={{ user }} password={{ user_pwd }} shell=/bin/bash
            </code></pre>
         </div>
     </section>
@@ -298,12 +310,12 @@ db.example.org
         <h2>Schleifen mit <em>item</em></h2>
         <div>
         <pre><code class="yaml">tasks:
-    - name: "Init | Some software should be installed"
-      action: apt pkg={{ item }} state=latest
-      with_items:
-        - sudo
-        - openssh-server
-        - ssh</code></pre>
+ - name: "Init | Some software should be installed"
+   action: apt pkg={{ item }} state=latest
+   with_items:
+      - sudo
+      - openssh-server
+      - ssh</code></pre>
         </div>
     </section>
     <section>
@@ -351,7 +363,7 @@ password={{ mysql.root_password }}
         <div>
             <ul>
                 <li><strong>Tags</strong> bündeln Tasks und lassen sich gezielt ausführen</li>
-                <li><strong>Roles</strong> erlauben </li>
+                <li><strong>Roles</strong> erlauben höhere Modularität in Playbooks</li>
             </ul>
         </div>
         <pre><code class="yaml">tasks:
@@ -389,12 +401,23 @@ $ pip install ansible</code></pre>
     <div>
         <img src="img/awx.png">
     </div>
-    <p>Bis zu 10 Hosts lassen sich kostenlos mit AWX managen.</p>
+    <p>Bis zu 10 Hosts lassen sich kostenlos mit <a href="http://www.ansibleworks.com/ansibleworks-awx/">AWX</a> managen.</p>
 </section>
 </section>
 
 <section>
+<section>
+        <h2>Weitere Ressourcen</h2>
 
+        <div>
+            <ul>
+            <li><a href="http://www.ansibleworks.com">ansibleworks.com</a> - Die Webseite von Ansible</li>
+            <li><a href="https://galaxy.ansibleworks.com">galaxy.ansibleworks.com</a> - Plattform für Ansible Playbooks/Roles</li>
+                <li><a href="https://ops-school.readthedocs.org/en/latest/config_management.html">Configuration
+                    Management 101</a> - Generelle Infos</li>
+            </ul>
+        </div>
+    </section>
 <section>
     <h2>Alternativen</h2>
 <p>Es gibt eine Vielzahl von Tools für<br />automatisiertes Configuration Management:</p>
@@ -408,16 +431,7 @@ $ pip install ansible</code></pre>
         </ul>
     </div>
 </section>
-    <section>
-        <h2>Weitere Ressourcen</h2>
-
-        <div>
-            <ul>
-                <li><a href="https://ops-school.readthedocs.org/en/latest/config_management.html">Configuration
-                    Management 101</a></li>
-            </ul>
-        </div>
-    </section>
+    
 </section>
 <section>
     <h2>Automate all the things</h2>
