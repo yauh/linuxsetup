@@ -1,7 +1,5 @@
-#jinja2: variable_start_string:<<,variable_end_string:>> 
-
 <VirtualHost *:80>
-        ServerAdmin << admin_email >>
+        ServerAdmin {{ admin_email }}
 
         DocumentRoot /var/www
         <Directory />
